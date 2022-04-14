@@ -1,5 +1,6 @@
 // 2022.04.14
 // Ticket Box program for a theme park.
+// 특이사항 : 12개월 미만은 모든 이용권에 대하여 무료 & 12개월 이상~36개월 미만은 모든 이용권에 대하여 1,5000원
 
 #include <stdio.h>
 #include <time.h> 
