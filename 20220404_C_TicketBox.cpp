@@ -1,27 +1,27 @@
 // 2022.04.14
 // Ticket Box program for a theme park.
-// Æ¯ÀÌ»çÇ× : 12°³¿ù ¹Ì¸¸Àº ¸ğµç ÀÌ¿ë±Ç¿¡ ´ëÇÏ¿© ¹«·á & 12°³¿ù ÀÌ»ó~36°³¿ù ¹Ì¸¸Àº ¸ğµç ÀÌ¿ë±Ç¿¡ ´ëÇÏ¿© 1,5000¿ø
+// íŠ¹ì´ì‚¬í•­ : 12ê°œì›” ë¯¸ë§Œì€ ëª¨ë“  ì´ìš©ê¶Œì— ëŒ€í•˜ì—¬ ë¬´ë£Œ & 12ê°œì›” ì´ìƒ~36ê°œì›” ë¯¸ë§Œì€ ëª¨ë“  ì´ìš©ê¶Œì— ëŒ€í•˜ì—¬ 15,000ì›
 
 #include <stdio.h>
 #include <time.h> 
 
 int main () {
 	
-	// ¿À´Ã ³¯Â¥ ºÒ·¯¿À±â 
+	// ì˜¤ëŠ˜ ë‚ ì§œ ë¶ˆëŸ¬ì˜¤ê¸° 
 	time_t t = time(NULL);
 	struct tm today = *localtime(&t);
 	int todayYear = today.tm_year + 1900;
 	int todayMonth = today.tm_mon + 1;
 	int todayDay = today.tm_mday;
 	
-	// ¿ä±İ »ó¼ö º¯¼ö ¼±¾ğ
+	// ìš”ê¸ˆ ìƒìˆ˜ ë³€ìˆ˜ ì„ ì–¸
 	const int PRICE_ALL_1DAY_ADULT = 62000, PRICE_ALL_1DAY_JUVENILE = 54000, PRICE_ALL_1DAY_CHILD = 47000, PRICE_ALL_1DAY_BABY=15000, PRICE_ALL_1DAY_NEWBORN = 0;
 	const int PRICE_ALL_AFTER4_ADULT = 50000, PRICE_ALL_AFTER4_JUVENILE = 43000, PRICE_ALL_AFTER4_CHILD = 36000, PRICE_ALL_AFTER4_BABY = 15000, PRICE_ALL_AFTER4_NEWBORN = 0;  
 	const int PRICE_PARK_1DAY_ADULT = 59000, PRICE_PARK_1DAY_JUVENILE = 52000, PRICE_PARK_1DAY_CHILD = 46000, PRICE_PARK_1DAY_BABY = 15000, PRICE_PARK_1DAY_NEWBORN = 0;
 	const int PRICE_PARK_AFTER4_ADULT = 47000, PRICE_PARK_AFTER4_JUVENILE = 41000, PRICE_PARK_AFTER4_CHILD = 35000, PRICE_PARK_AFTER4_BABY = 15000, PRICE_PARK_AFTER4_NEWBORN = 0; 
-	int priceArray[4]; // ±ÇÁ¾ ¼±ÅÃ¿¡ µû¸¥ ¿ä±İ ÀÔ·ÂÇÒ ¹è¿­ 
+	int priceArray[4]; // ê¶Œì¢… ì„ íƒì— ë”°ë¥¸ ìš”ê¸ˆ ì…ë ¥í•  ë°°ì—´ 
 	
-	// ³ªÀÌ »ó¼ö º¯¼ö ¼±¾ğ 
+	// ë‚˜ì´ ìƒìˆ˜ ë³€ìˆ˜ ì„ ì–¸ 
 	const int ELDER_AGE_MIN = 65;
 	const int ADULT_AGE_MAX = 64, ADULT_AGE_MIN = 19;
 	const int JUVENILE_AGE_MAX = 18, JUVERNILE_AGE_MIN = 13;
@@ -31,62 +31,62 @@ int main () {
 	const int INDEX_MALE_OLD = 1, INDEX_FEMALE_OLD = 2, INDEX_MALE_NEW = 3, INDEX_FEMALE_NEW = 4; 
 	const int BIRTH_YEAR_ADD_OLD = 1900, BIRTH_YEAR_ADD_NEW = 2000;
 	
-	// ¿ì´ë»çÇ× 
+	// ìš°ëŒ€ì‚¬í•­ 
 	const float BENEFIT_NON = 0, BENEFIT_DISABLED = 0.5, BENEFIT_NATIONAL_MERIT = 0.5, BENEFIT_PREGNANT = 0.5, BENEFIT_ARMY = 0.49, BENEFIT_MULTICHILD = 0.3;
 	const int  BENEFIT_NON_MAX = 0, BENEFIT_DISABLED_MAX = 2, BENEFIT_NATIONAL_MERIT_MAX = 2, BENEFIT_PREGNANT_MAX = 1, BENEFIT_ARMY_MAX = 2, BENEFIT_MULTICHILD_MAX = 1;
 
-	// ÀÔ·Â º¯¼ö ¼±¾ğ
-	int inputTicketSelect; 		// ±ÇÁ¾ ¼±ÅÃ 
-	char inputSocialID[7]; 		// »ç¿ëÀÚ ÁÖ¹Îµî·Ï¹øÈ£ 
-	int inputNumberOfTicket;	// Æ¼ÄÏ ¼ö·® 
-	int inputBenefit; 			// ¿ì´ë»çÇ× 
+	// ì…ë ¥ ë³€ìˆ˜ ì„ ì–¸
+	int inputTicketSelect; 		// ê¶Œì¢… ì„ íƒ 
+	char inputSocialID[7]; 		// ì‚¬ìš©ì ì£¼ë¯¼ë“±ë¡ë²ˆí˜¸ 
+	int inputNumberOfTicket;	// í‹°ì¼“ ìˆ˜ëŸ‰ 
+	int inputBenefit; 			// ìš°ëŒ€ì‚¬í•­ 
 	
-	// °è»ê º¯¼ö ¼±¾ğ 
-	int birthYearIndex; 		// 1900³â´ë & 2000³â´ë»ı ±¸ºĞ
-	int userBirthYear;			// »ç¿ëÀÚ »ı³â 
-	int userBirthMonth;			// »ç¿ëÀÚ »ı¿ù 
-	int userBirthDay;			// »ç¿ëÀÚ »ıÀÏ 
-	int userAge;				// **»ç¿ëÀÚ ³ªÀÌ 
-	int ticketPrice;			// **±ÇÁ¾ & ³ªÀÌ¿¡ µû¸¥ Æ¼ÄÏ °¡°İ 
-	int totalTicketPrice;		// **Æ¼ÄÏ °¡°İ X ¼ö·® 
-	float appliedBenefit;		// Àû¿ëµÈ º£³×ÇÍ ±İ¾× (Á¾·ù¿¡ µû¸¥ ±İ¾× »ó¼ö º¯¼ö·Î ¹Ş¾Æ¿Ã ¿¹Á¤) 
-	int discountedTicketPrice;	// **¿ì´ë»çÇ× Àû¿ëÀ¸·Î ÀÎÇÑ ÇÒÀÎ ±İ¾×
-	int discountedTicketNumber; // **¿ì´ë»çÇ× Àû¿ëµÈ Æ¼ÄÏ ¼ö·® 
+	// ê³„ì‚° ë³€ìˆ˜ ì„ ì–¸ 
+	int birthYearIndex; 		// 1900ë…„ëŒ€ & 2000ë…„ëŒ€ìƒ êµ¬ë¶„
+	int userBirthYear;			// ì‚¬ìš©ì ìƒë…„ 
+	int userBirthMonth;			// ì‚¬ìš©ì ìƒì›” 
+	int userBirthDay;			// ì‚¬ìš©ì ìƒì¼ 
+	int userAge;				// **ì‚¬ìš©ì ë‚˜ì´ 
+	int ticketPrice;			// **ê¶Œì¢… & ë‚˜ì´ì— ë”°ë¥¸ í‹°ì¼“ ê°€ê²© 
+	int totalTicketPrice;		// **í‹°ì¼“ ê°€ê²© X ìˆ˜ëŸ‰ 
+	float appliedBenefit;		// ì ìš©ëœ ë² ë„¤í• ê¸ˆì•¡ (ì¢…ë¥˜ì— ë”°ë¥¸ ê¸ˆì•¡ ìƒìˆ˜ ë³€ìˆ˜ë¡œ ë°›ì•„ì˜¬ ì˜ˆì •) 
+	int discountedTicketPrice;	// **ìš°ëŒ€ì‚¬í•­ ì ìš©ìœ¼ë¡œ ì¸í•œ í• ì¸ ê¸ˆì•¡
+	int discountedTicketNumber; // **ìš°ëŒ€ì‚¬í•­ ì ìš©ëœ í‹°ì¼“ ìˆ˜ëŸ‰ 
 	int finalTicketPrice;		// **totalTicketPrice - discountedTicketPrice
-	int continueTicketPurchase; // Æ¼ÄÏ ¹ß±Ç ÇÁ·Î¼¼½º ¹İº¹ ¿©ºÎ ¼±ÅÃ 
-	int NewPurchase;			// »õ·Î¿î ÁÖ¹® ½ÃÀÛ ¿©ºÎ ¼±ÅÃ 
+	int continueTicketPurchase; // í‹°ì¼“ ë°œê¶Œ í”„ë¡œì„¸ìŠ¤ ë°˜ë³µ ì—¬ë¶€ ì„ íƒ 
+	int NewPurchase;			// ìƒˆë¡œìš´ ì£¼ë¬¸ ì‹œì‘ ì—¬ë¶€ ì„ íƒ 
 	
 	
 	do {
-	// ´©Àû µ¥ÀÌÅÍ º¯¼ö ¼±¾ğ
-	int accumulatedFinalPrice = 0; // ÃÑ ÁÖ¹® ±İ¾× 
-	int accumulatedTicketNumber = 0; // ÃÑ ÁÖ¹® Æ¼ÄÏ ¼ö·® 
+	// ëˆ„ì  ë°ì´í„° ë³€ìˆ˜ ì„ ì–¸
+	int accumulatedFinalPrice = 0; // ì´ ì£¼ë¬¸ ê¸ˆì•¡ 
+	int accumulatedTicketNumber = 0; // ì´ ì£¼ë¬¸ í‹°ì¼“ ìˆ˜ëŸ‰ 
 	
 	
-	// Æ¼ÄÏ ÁÖ¹® ½ÃÀÛ 
+	// í‹°ì¼“ ì£¼ë¬¸ ì‹œì‘ 
 	do { // ~ while => return to beginning of the process if the user select "continue purchasing ticket" at the end of the process. 
 	
 		do {
-			printf("±ÇÁ¾À» ¼±ÅÃÇÏ¼¼¿ä.\n\t1. Á¾ÇÕÀÌ¿ë±Ç - ÁÖ°£±Ç(1DAY)\n\t2. Á¾ÇÕÀÌ¿ë±Ç - ¾ß°£±Ç(AFTER4)\n\t3. ÆÄÅ©ÀÌ¿ë±Ç - ÁÖ°£±Ç(1DAY)\n\t4. ÆÄÅ©ÀÌ¿ë±Ç - ¾ß°£±Ç(AFTER4)\n\t => ");
+			printf("ê¶Œì¢…ì„ ì„ íƒí•˜ì„¸ìš”.\n\t1. ì¢…í•©ì´ìš©ê¶Œ - ì£¼ê°„ê¶Œ(1DAY)\n\t2. ì¢…í•©ì´ìš©ê¶Œ - ì•¼ê°„ê¶Œ(AFTER4)\n\t3. íŒŒí¬ì´ìš©ê¶Œ - ì£¼ê°„ê¶Œ(1DAY)\n\t4. íŒŒí¬ì´ìš©ê¶Œ - ì•¼ê°„ê¶Œ(AFTER4)\n\t => ");
 			scanf("%d", &inputTicketSelect);
 		} while (inputTicketSelect < 1 || inputTicketSelect > 4); 
-		// 1~4 ¿Ü ¼±ÅÃ ½Ã ¼±ÅÃÃ¢ ÀçÃâ·Â. 
+		// 1~4 ì™¸ ì„ íƒ ì‹œ ì„ íƒì°½ ì¬ì¶œë ¥. 
 		
 		do {
-		printf("Æ¼ÄÏ »ç¿ëÀÚÀÇ ÁÖ¹Îµî·Ï¹øÈ£ 7ÀÚ¸®¸¦ ÀÔ·ÂÇÏ¼¼¿ä.(¾Õ 6ÀÚ¸® & µÚ 1ÀÚ¸®)\n\t => ");
+		printf("í‹°ì¼“ ì‚¬ìš©ìì˜ ì£¼ë¯¼ë“±ë¡ë²ˆí˜¸ 7ìë¦¬ë¥¼ ì…ë ¥í•˜ì„¸ìš”.(ì• 6ìë¦¬ & ë’¤ 1ìë¦¬)\n\t => ");
 		scanf("%s", &inputSocialID);
 		} while ( ((inputSocialID[2]-48)*10 + (inputSocialID[3]-48)) > 12 || ((inputSocialID[4]-48)*10 + (inputSocialID[5]-48)) > 31 || inputSocialID[6]-48 > 4 );
 		
-		printf("ÁÖ¹® ¼ö·®À» ÀÔ·ÂÇÏ¼¼¿ä.\n\t => ");
+		printf("ì£¼ë¬¸ ìˆ˜ëŸ‰ì„ ì…ë ¥í•˜ì„¸ìš”.\n\t => ");
 		scanf("%d", &inputNumberOfTicket);
 		
 		do {
-			printf("¿ì´ë»çÇ×À» ¼±ÅÃÇÏ¼¼¿ä.\n\t1. ¾øÀ½ (³ªÀÌ ¿ì´ë´Â ÀÚµ¿ Ã³¸®)\n\t2. Àå¾ÖÀÎ\n\t3. ±¹°¡À¯°øÀÚ\n\t4. ÀÓ»êºÎ (Á¾ÇÕÀÌ¿ë±Ç¸¸ ÇØ´ç)\n\t5. ÈŞ°¡Àåº´ (Á¾ÇÕÀÌ¿ë±Ç¸¸ ÇØ´ç)\n\t6. ´ÙÀÚ³à (Á¾ÇÕÀÌ¿ë±Ç¸¸ ÇØ´ç)\n\t => ");
+			printf("ìš°ëŒ€ì‚¬í•­ì„ ì„ íƒí•˜ì„¸ìš”.\n\t1. ì—†ìŒ (ë‚˜ì´ ìš°ëŒ€ëŠ” ìë™ ì²˜ë¦¬)\n\t2. ì¥ì• ì¸\n\t3. êµ­ê°€ìœ ê³µì\n\t4. ì„ì‚°ë¶€ (ì¢…í•©ì´ìš©ê¶Œë§Œ í•´ë‹¹)\n\t5. íœ´ê°€ì¥ë³‘ (ì¢…í•©ì´ìš©ê¶Œë§Œ í•´ë‹¹)\n\t6. ë‹¤ìë…€ (ì¢…í•©ì´ìš©ê¶Œë§Œ í•´ë‹¹)\n\t => ");
 			scanf("%d", &inputBenefit);
 		} while (inputBenefit < 1 || inputBenefit > 6);
-		// 1~6 ¿Ü ¼±ÅÃ ½Ã ¼±ÅÃÃ¢ ÀçÃâ·Â. 
+		// 1~6 ì™¸ ì„ íƒ ì‹œ ì„ íƒì°½ ì¬ì¶œë ¥. 
 		
-		// ±ÇÁ¾ ¼±ÅÃ¿¡ µû¸¥ Price List  
+		// ê¶Œì¢… ì„ íƒì— ë”°ë¥¸ Price List  
 		switch (inputTicketSelect) {
 			case 1:
 				priceArray[0] = PRICE_ALL_1DAY_ADULT;
@@ -155,12 +155,12 @@ int main () {
 			appliedBenefit = BENEFIT_NON;
 			discountedTicketNumber = BENEFIT_NON_MAX;
 		} else {
-			if (inputTicketSelect == 1 || inputTicketSelect == 2) { // Á¾ÇÕ ÀÌ¿ë±Ç ¼±ÅÃÇÑ °æ¿ì 
-					if (inputBenefit == 1) { 	// ¿ì´ë»çÇ× ¾øÀ½ 
+			if (inputTicketSelect == 1 || inputTicketSelect == 2) { // ì¢…í•© ì´ìš©ê¶Œ ì„ íƒí•œ ê²½ìš° 
+					if (inputBenefit == 1) { 	// ìš°ëŒ€ì‚¬í•­ ì—†ìŒ 
 					appliedBenefit = BENEFIT_NON;
 					discountedTicketNumber = BENEFIT_NON_MAX;
 				}
-				if (inputBenefit == 2) { 		// Àå¾ÖÀÎ 
+				if (inputBenefit == 2) { 		// ì¥ì• ì¸ 
 					appliedBenefit = BENEFIT_DISABLED;
 					if (inputNumberOfTicket <= BENEFIT_DISABLED_MAX) {
 						discountedTicketNumber = inputNumberOfTicket;
@@ -168,7 +168,7 @@ int main () {
 						discountedTicketNumber = BENEFIT_DISABLED_MAX;
 					}
 				}
-				if (inputBenefit == 3) { 		// ±¹°¡À¯°øÀÚ 
+				if (inputBenefit == 3) { 		// êµ­ê°€ìœ ê³µì 
 					appliedBenefit = BENEFIT_NATIONAL_MERIT;
 					if (inputNumberOfTicket <= BENEFIT_NATIONAL_MERIT_MAX) {
 						discountedTicketNumber = inputNumberOfTicket;
@@ -176,7 +176,7 @@ int main () {
 						discountedTicketNumber = BENEFIT_NATIONAL_MERIT_MAX;
 					}
 				} 
-				if (inputBenefit == 4) { 		// ÀÓ»êºÎ 
+				if (inputBenefit == 4) { 		// ì„ì‚°ë¶€ 
 					appliedBenefit = BENEFIT_PREGNANT;
 					if (inputNumberOfTicket <= BENEFIT_PREGNANT_MAX) {
 						discountedTicketNumber = inputNumberOfTicket;
@@ -184,7 +184,7 @@ int main () {
 						discountedTicketNumber = BENEFIT_PREGNANT_MAX;
 					}
 				}
-				if (inputBenefit == 5) { 		// ÈŞ°¡Àåº´ 
+				if (inputBenefit == 5) { 		// íœ´ê°€ì¥ë³‘ 
 					appliedBenefit = BENEFIT_ARMY;
 					if (inputNumberOfTicket <= BENEFIT_ARMY_MAX) {
 						discountedTicketNumber = inputNumberOfTicket;
@@ -192,7 +192,7 @@ int main () {
 						discountedTicketNumber =  BENEFIT_ARMY_MAX;
 					}
 				}
-				if (inputBenefit == 6) { 		//´ÙÀÚ³à 
+				if (inputBenefit == 6) { 		//ë‹¤ìë…€ 
 					appliedBenefit = BENEFIT_MULTICHILD;
 					if (inputNumberOfTicket <= BENEFIT_MULTICHILD_MAX) {
 						discountedTicketNumber = inputNumberOfTicket;
@@ -200,12 +200,12 @@ int main () {
 						discountedTicketNumber = BENEFIT_MULTICHILD_MAX;
 					}
 				}	
-			} else if (inputTicketSelect == 3 || inputTicketSelect == 4) { // ÆÄÅ© ÀÌ¿ë±Ç ¼±ÅÃÇÑ °æ¿ì 
+			} else if (inputTicketSelect == 3 || inputTicketSelect == 4) { // íŒŒí¬ ì´ìš©ê¶Œ ì„ íƒí•œ ê²½ìš° 
 				if (inputBenefit == 1 || inputBenefit == 4 || inputBenefit == 5 || inputBenefit == 6) { 
 					appliedBenefit = BENEFIT_NON;
 					discountedTicketNumber = BENEFIT_NON_MAX;
 				}
-				if (inputBenefit == 2) { 		// Àå¾ÖÀÎ & ±¹°¡À¯°øÀÚ ¿ì´ë µÎ °¡Áö¸¸ ÆÄÅ©ÀÌ¿ë±Ç¿¡ Àû¿ë °¡´É. 
+				if (inputBenefit == 2) { 		// ì¥ì• ì¸ & êµ­ê°€ìœ ê³µì ìš°ëŒ€ ë‘ ê°€ì§€ë§Œ íŒŒí¬ì´ìš©ê¶Œì— ì ìš© ê°€ëŠ¥. 
 					appliedBenefit = BENEFIT_DISABLED;
 					if (inputNumberOfTicket <= BENEFIT_DISABLED_MAX) {
 						discountedTicketNumber = inputNumberOfTicket;
@@ -213,7 +213,7 @@ int main () {
 						discountedTicketNumber = BENEFIT_DISABLED_MAX;
 					}
 				}
-				if (inputBenefit == 3) { 		// Àå¾ÖÀÎ & ±¹°¡À¯°øÀÚ ¿ì´ë µÎ °¡Áö¸¸ ÆÄÅ©ÀÌ¿ë±Ç¿¡ Àû¿ë °¡´É. 
+				if (inputBenefit == 3) { 		// ì¥ì• ì¸ & êµ­ê°€ìœ ê³µì ìš°ëŒ€ ë‘ ê°€ì§€ë§Œ íŒŒí¬ì´ìš©ê¶Œì— ì ìš© ê°€ëŠ¥. 
 					appliedBenefit = BENEFIT_NATIONAL_MERIT;
 					if (inputNumberOfTicket <= BENEFIT_NATIONAL_MERIT_MAX) {
 						discountedTicketNumber = inputNumberOfTicket;
@@ -233,31 +233,31 @@ int main () {
 		
 		// print the final receipt.
 		printf("\n****************************************\n");
-		printf("»ç¿ëÀÚ ³ªÀÌ : %d ¼¼\n", userAge);
-		printf("ÃÑ Æ¼ÄÏ ¼ö·® : %d Àå\n", inputNumberOfTicket);
-		printf("Á¤»ó °¡°İ : %d ¿ø (%d ¿ø x %d Àå)\n", totalTicketPrice, ticketPrice, inputNumberOfTicket);
-		printf("¿ì´ë ±İ¾× : %d ¿ø (%d ¿ø x %d Àå)\n", discountedTicketPrice, (int)(ticketPrice * appliedBenefit), discountedTicketNumber);
-		printf("¼±ÅÃÇÏ½Å Æ¼ÄÏ °¡°İÀº ÃÑ %d ¿øÀÔ´Ï´Ù.\n", finalTicketPrice); 
-		printf("°è»êÇÏ½Ç ´©Àû ±İ¾×Àº ÃÑ %d ¿øÀÔ´Ï´Ù.\n", accumulatedFinalPrice);
+		printf("ì‚¬ìš©ì ë‚˜ì´ : %d ì„¸\n", userAge);
+		printf("ì´ í‹°ì¼“ ìˆ˜ëŸ‰ : %d ì¥\n", inputNumberOfTicket);
+		printf("ì •ìƒ ê°€ê²© : %d ì› (%d ì› x %d ì¥)\n", totalTicketPrice, ticketPrice, inputNumberOfTicket);
+		printf("ìš°ëŒ€ ê¸ˆì•¡ : %d ì› (%d ì› x %d ì¥)\n", discountedTicketPrice, (int)(ticketPrice * appliedBenefit), discountedTicketNumber);
+		printf("ì„ íƒí•˜ì‹  í‹°ì¼“ ê°€ê²©ì€ ì´ %d ì›ì…ë‹ˆë‹¤.\n", finalTicketPrice); 
+		printf("ê³„ì‚°í•˜ì‹¤ ëˆ„ì  ê¸ˆì•¡ì€ ì´ %d ì›ì…ë‹ˆë‹¤.\n", accumulatedFinalPrice);
 		printf("****************************************\n\n");
 		
-		printf("°è¼Ó ¹ß±ÇÇÏ½Ã°Ú½À´Ï±î?\n\t1.Æ¼ÄÏ ¹ß±Ç\n\t2.Á¾·á\n\t ==> ");
+		printf("ê³„ì† ë°œê¶Œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?\n\t1.í‹°ì¼“ ë°œê¶Œ\n\t2.ì¢…ë£Œ\n\t ==> ");
 		scanf("%d", &continueTicketPurchase);
 		
 	} while (continueTicketPurchase == 1); 
 		
 		printf("****************************************\n");
-		printf("¼±ÅÃÇÏ½Å Æ¼ÄÏ ¼ö·®Àº ÃÑ %d °³ÀÔ´Ï´Ù.\n", accumulatedTicketNumber);
-		printf("°è»êÇÏ½Ç ±İ¾×Àº ÃÑ %d ¿øÀÔ´Ï´Ù.\n", accumulatedFinalPrice);
+		printf("ì„ íƒí•˜ì‹  í‹°ì¼“ ìˆ˜ëŸ‰ì€ ì´ %d ê°œì…ë‹ˆë‹¤.\n", accumulatedTicketNumber);
+		printf("ê³„ì‚°í•˜ì‹¤ ê¸ˆì•¡ì€ ì´ %d ì›ì…ë‹ˆë‹¤.\n", accumulatedFinalPrice);
 		printf("****************************************\n");
 		printf("\n========================================\n");
 		
-		printf("°è¼Ó ÁøÇà ¿©ºÎ¸¦ ¼±ÅÃÇÏ½Ê½Ã¿À. (1. »õ·Î¿î ÁÖ¹®, 2. ÇÁ·Î±×·¥ Á¾·á)\n\t ==> ");
+		printf("ê³„ì† ì§„í–‰ ì—¬ë¶€ë¥¼ ì„ íƒí•˜ì‹­ì‹œì˜¤. (1. ìƒˆë¡œìš´ ì£¼ë¬¸, 2. í”„ë¡œê·¸ë¨ ì¢…ë£Œ)\n\t ==> ");
 		scanf("%d", &NewPurchase);
 		
 	} while (NewPurchase == 1);
 	
-		printf("Æ¼ÄÏ ¹ß±ÇÀ» Á¾·áÇÕ´Ï´Ù.");
+		printf("í‹°ì¼“ ë°œê¶Œì„ ì¢…ë£Œí•©ë‹ˆë‹¤.");
 
 	return 0;
 }
