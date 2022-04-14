@@ -114,6 +114,7 @@ int main () {
 			default :
 				break;
 		}
+		
 		// International Age of the user. (-48 ==> change ASCII code to Decimal number)
 		birthYearIndex = inputSocialID[6]-48;
 		if (birthYearIndex == INDEX_MALE_OLD || birthYearIndex == INDEX_FEMALE_OLD) {
