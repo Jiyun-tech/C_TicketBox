@@ -112,7 +112,6 @@ int main () {
 				priceArray[4] = PRICE_PARK_AFTER4_NEWBORN;
 				break;
 			default :
-				printf("권종 선택 오류\n");
 				break;
 		}
 		// International Age of the user. (-48 ==> change ASCII code to Decimal number)
