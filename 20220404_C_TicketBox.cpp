@@ -69,7 +69,7 @@ int main () {
 		// 1~4 외 선택 시 선택창 재출력. 
 		
 		do {
-		printf("티켓 사용자의 주민등록번호 7자리를 입력하세요.(앞 6자리 & 뒤 1자리)\n\t => ");
+		printf("티켓 사용자의 주민등록번호 앞 7자리를 입력하세요.(앞 6자리 & 뒷자리 첫 번째 숫자까지)\n\t => ");
 		scanf("%s", &inputSocialID);
 		} while ( ((inputSocialID[2]-48)*10 + (inputSocialID[3]-48)) > 12 || ((inputSocialID[4]-48)*10 + (inputSocialID[5]-48)) > 31 || inputSocialID[6]-48 > 4 );
 		
